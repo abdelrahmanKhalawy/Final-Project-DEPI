@@ -58,6 +58,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // Paymob
 builder.Services.AddHttpClient<IPaymobService, PaymobService>();
+// Cloudinary
+builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 
 var app = builder.Build();
 
