@@ -7,6 +7,7 @@
         public string Email { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
+        public string Specialization { get; set; } = string.Empty;
         public bool IsActive { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
