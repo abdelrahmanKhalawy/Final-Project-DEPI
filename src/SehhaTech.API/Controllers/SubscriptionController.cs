@@ -25,6 +25,7 @@ namespace SehhaTech.API.Controllers
         // Step 1: الكلينك يطلب الدفع
         // POST api/subscription/initiate/{tenantId}
         [HttpPost("initiate/{tenantId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> InitiatePayment(int tenantId)
         {
             try
@@ -33,8 +34,20 @@ namespace SehhaTech.API.Controllers
                 if (tenant == null)
                     return NotFound(new { message = "Clinic not found" });
 
-                decimal amount = 500; // سعر الاشتراك ثابت
+                decimal amount = 500;
 
+                // لو في subscription pending موجودة، استخدمها
+                var existingSubscription = await _context.Subscriptions
+                    .FirstOrDefaultAsync(s => s.TenantId == tenantId && s.Status == SubscriptionStatus.Pending);
+
+                if (existingSubscription != null)
+                {
+                    var existingAuthToken = await _paymobService.GetAuthTokenAsync();
+                    var existingOrderId = int.Parse(existingSubscription.PaymobOrderId);
+                    var existingPaymentKey = await _paymobService.GetPaymentKeyAsync(existingAuthToken, existingOrderId, amount, tenantId);
+                    var existingIframeUrl = await _paymobService.GetIframeUrlAsync(existingPaymentKey);
+                    return Ok(new { iframeUrl = existingIframeUrl });
+                }
                 // Paymob Steps
                 var authToken = await _paymobService.GetAuthTokenAsync();
                 var orderId = await _paymobService.CreateOrderAsync(authToken, amount);

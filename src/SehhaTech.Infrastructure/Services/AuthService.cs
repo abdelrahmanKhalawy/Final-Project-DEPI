@@ -24,7 +24,27 @@ namespace SehhaTech.Infrastructure.Services
                 .AnyAsync(u => u.Email == dto.Email);
 
             if (existingUser)
+            {
+                var existingUserData = await _context.Users
+                    .Include(u => u.Tenant)
+                    .FirstOrDefaultAsync(u => u.Email == dto.Email);
+
+                if (existingUserData?.Tenant != null && !existingUserData.Tenant.IsActive)
+                {
+                    var existingToken = _jwtService.GenerateToken(existingUserData);
+                    return new AuthResponseDto
+                    {
+                        Token = existingToken,
+                        FullName = existingUserData.FullName,
+                        Email = existingUserData.Email,
+                        Role = existingUserData.Role.ToString(),
+                        TenantId = existingUserData.TenantId,
+                        MustResetPassword = existingUserData.MustResetPassword
+                    };
+                }
+
                 throw new Exception("Email already exists");
+            }
 
             // إنشاء التيننت
             var tenant = new Tenant
@@ -33,7 +53,8 @@ namespace SehhaTech.Infrastructure.Services
                 Email = dto.Email,
                 Phone = dto.Phone,
                 Address = dto.Address,
-                IsActive = false // هيتفعل بعد الدفع
+                Specialization = dto.Specialization,
+                IsActive = false
             };
 
             _context.Tenants.Add(tenant);
@@ -43,7 +64,7 @@ namespace SehhaTech.Infrastructure.Services
             var admin = new User
             {
                 TenantId = tenant.Id,
-                FullName = dto.AdminFullName,
+                FullName = dto.FullName,
                 Email = dto.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                 Role = UserRole.ClinicAdmin,

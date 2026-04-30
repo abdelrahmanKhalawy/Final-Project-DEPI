@@ -30,6 +30,13 @@ namespace SehhaTech.API.Middleware
                 return;
             }
 
+            // عدي لو الـ request للـ subscription initiate عشان الكلينك الجديد يقدر يدفع
+            if (context.Request.Path.StartsWithSegments("/api/subscription/initiate"))
+            {
+                await _next(context);
+                return;
+            }
+
             // جيب الـ TenantId من الـ Token
             var tenantIdClaim = context.User.FindFirst("TenantId")?.Value;
             if (string.IsNullOrEmpty(tenantIdClaim) || !int.TryParse(tenantIdClaim, out int tenantId))
