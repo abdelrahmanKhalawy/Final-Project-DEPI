@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Security Standards | SehhaTech Clinical Solutions</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#afefdf", "outline": "#74777f", "error": "#ba1a1a",
+              "secondary": "#006a6a", "primary-container": "#1a365d", "on-primary-fixed": "#001b3c",
+              "background": "#ffffff", "tertiary": "#002620", "inverse-on-surface": "#eef1f3",
+              "on-tertiary-fixed-variant": "#045044", "surface-dim": "#d7dadc",
+              "surface-container": "#ebeef0", "on-primary": "#ffffff", "error-container": "#ffdad6",
+              "surface-container-low": "#f1f4f6", "inverse-primary": "#adc7f7",
+              "on-secondary-fixed": "#002020", "surface-container-lowest": "#ffffff",
+              "tertiary-fixed-dim": "#93d3c3", "surface": "#ffffff", "on-error-container": "#93000a",
+              "secondary-container": "#90efef", "surface-tint": "#455f88",
+              "outline-variant": "#c4c6cf", "on-secondary": "#ffffff", "on-tertiary-fixed": "#00201a",
+              "on-surface-variant": "#43474e", "tertiary-container": "#003e34",
+              "primary-fixed": "#d6e3ff", "on-surface": "#181c1e", "primary": "#002045",
+              "on-secondary-fixed-variant": "#004f4f", "on-error": "#ffffff",
+              "on-background": "#181c1e", "on-tertiary-container": "#6cab9c",
+              "inverse-surface": "#2d3133", "surface-container-highest": "#e0e3e5",
+              "on-tertiary": "#ffffff", "surface-bright": "#ffffff",
+              "on-primary-container": "#86a0cd", "secondary-fixed": "#93f2f2",
+              "on-secondary-container": "#006e6e", "surface-variant": "#e0e3e5",
+              "on-primary-fixed-variant": "#2d476f", "secondary-fixed-dim": "#76d6d5",
+              "surface-container-high": "#e5e9eb", "primary-fixed-dim": "#adc7f7"
+            },
+            borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+            fontFamily: { "headline": ["Manrope"], "display": ["Manrope"], "body": ["Inter"], "label": ["Inter"] }
+          },
+        },
+      }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            line-height: 1.75;
+        }
+
+        .prose h2 {
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        .prose h3 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .prose p {
+            margin-bottom: 1.5rem;
+            color: #43474e;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-container selection:text-on-secondary-container">
+
+    <!-- Header -->
+    <header class="border-b border-outline-variant/30 sticky top-0 bg-white/80 backdrop-blur-md z-50">
+        <nav class="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a class="flex items-center gap-2 text-primary font-semibold text-sm hover:text-secondary transition-colors" href="index.html">
+                <span class="material-symbols-outlined text-sm">arrow_back</span>
+                Back to Home
+            </a>
+            <div class="text-lg font-extrabold text-primary font-headline tracking-tighter">SehhaTech</div>
+        </nav>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 py-16">
+        <article class="prose prose-slate max-w-none">
+            <div class="mb-12">
+                <div class="text-secondary font-bold text-xs uppercase tracking-widest mb-4">Security Whitepaper</div>
+                <h1 class="text-4xl md:text-5xl font-extrabold font-headline text-primary leading-tight mb-6">
+                    Clinical Data Protection Standards
+                </h1>
+                <p class="text-xl text-on-surface-variant font-light italic">
+                    A comprehensive overview of the technical and administrative safeguards protecting clinic and patient data at SehhaTech.
+                </p>
+            </div>
+
+            <hr class="border-outline-variant/30 my-10" />
+
+            <!-- 1. Authentication & Access Control -->
+            <h2 class="text-2xl text-primary font-headline">1. Authentication &amp; Access Control</h2>
+            <p>
+                SehhaTech uses a JWT Bearer authentication system with role-based access control. Every user session is issued a signed token containing their identity, role, and clinic association. Tokens expire after 7 days and must be renewed via re-authentication.
+            </p>
+            <h3 class="text-xl text-primary font-headline">Role-Based Isolation</h3>
+            <p>
+                The platform enforces strict role separation across four user types: SuperAdmin, ClinicAdmin, Doctor, and Receptionist. Each role is limited to only the data and actions relevant to their function. SuperAdmins operate across the entire platform, while all other roles are confined to their own clinic's data.
+            </p>
+            <div class="bg-surface-container-low p-6 rounded-2xl my-8 border border-outline-variant/20">
+                <h4 class="text-primary font-bold mb-2">Access Control Highlights:</h4>
+                <ul class="list-disc pl-5 space-y-2 text-on-surface-variant text-sm">
+                    <li>JWT tokens signed with HS256 and validated on every request.</li>
+                    <li>All protected endpoints require <code>[Authorize]</code> attribute.</li>
+                    <li>Passwords hashed with BCrypt before storage — never stored in plain text.</li>
+                    <li>New users are forced to reset their password on first login (<code>MustResetPassword = true</code>).</li>
+                </ul>
+            </div>
+
+            <!-- 2. Multi-Tenant Data Isolation -->
+            <h2 class="text-2xl text-primary font-headline">2. Multi-Tenant Data Isolation</h2>
+            <p>
+                Every clinic operates in a fully isolated data environment. A custom <code>TenantMiddleware</code> runs on every authenticated request, extracting the <code>TenantId</code> from the JWT token and injecting it into the request context. All database queries are automatically scoped to that clinic's data.
+            </p>
+            <h3 class="text-xl text-primary font-headline">Subscription Enforcement</h3>
+            <p>
+                The middleware also verifies that a clinic's subscription is active before allowing access. Clinics with expired or inactive subscriptions receive a 403 Forbidden response and cannot access any system data until their subscription is renewed.
+            </p>
+
+            <!-- 3. Data Encryption -->
+            <h2 class="text-2xl text-primary font-headline">3. Data Encryption</h2>
+            <p>
+                All sensitive data is protected both in transit and at rest. SehhaTech enforces HTTPS for all API communication, ensuring no data is transmitted over unencrypted connections.
+            </p>
+            <ul class="list-none space-y-4 mb-8">
+                <li class="flex gap-4">
+                    <span class="material-symbols-outlined text-secondary shrink-0">verified_user</span>
+                    <div>
+                        <strong class="text-primary">Encryption in Transit:</strong>
+                        TLS encryption for all data moving between client devices and the SehhaTech API server.
+                    </div>
+                </li>
+                <li class="flex gap-4">
+                    <span class="material-symbols-outlined text-secondary shrink-0">verified_user</span>
+                    <div>
+                        <strong class="text-primary">Password Security:</strong>
+                        BCrypt hashing with salt ensures passwords cannot be reversed even if the database is compromised.
+                    </div>
+                </li>
+                <li class="flex gap-4">
+                    <span class="material-symbols-outlined text-secondary shrink-0">verified_user</span>
+                    <div>
+                        <strong class="text-primary">Image Storage:</strong>
+                        All clinic and patient images are stored on Cloudinary with secure HTTPS URLs. Original files are never stored on the application server.
+                    </div>
+                </li>
+            </ul>
+
+            <!-- 4. Payment Security -->
+            <h2 class="text-2xl text-primary font-headline">4. Payment Security</h2>
+            <p>
+                SehhaTech does not store any payment card information. All payment processing is handled entirely by Paymob, a PCI-DSS compliant payment gateway. SehhaTech only stores the resulting order ID and subscription status after a successful transaction.
+            </p>
+            <div class="grid grid-cols-2 gap-4 my-8">
+                <div class="p-4 bg-primary text-white rounded-xl">
+                    <div class="text-3xl font-extrabold">0</div>
+                    <div class="text-xs uppercase opacity-70">Card Data Stored</div>
+                </div>
+                <div class="p-4 bg-surface-container rounded-xl">
+                    <div class="text-3xl font-extrabold text-primary">PCI</div>
+                    <div class="text-xs uppercase text-on-surface-variant">DSS Compliant Gateway</div>
+                </div>
+            </div>
+
+            <!-- 5. Compliance -->
+            <h2 class="text-2xl text-primary font-headline">5. Regulatory Compliance</h2>
+            <p>
+                SehhaTech is built with healthcare data privacy requirements in mind. The platform's architecture — including tenant isolation, role-based access, forced password resets, and audit-ready data models — is designed to align with HIPAA administrative and technical safeguard requirements.
+            </p>
+            <div class="bg-surface-container-low p-6 rounded-2xl my-8 border border-outline-variant/20">
+                <h4 class="text-primary font-bold mb-2">Compliance Highlights:</h4>
+                <ul class="list-disc pl-5 space-y-2 text-on-surface-variant text-sm">
+                    <li>Complete data isolation per clinic (Multi-Tenant architecture).</li>
+                    <li>Role-based access ensures minimum necessary access principle.</li>
+                    <li>Forced password change on first login for all new users.</li>
+                    <li>No payment data stored on SehhaTech servers.</li>
+                </ul>
+            </div>
+
+            <footer class="mt-20 pt-10 border-t border-outline-variant/30 text-center">
+                <p class="text-sm text-on-surface-variant mb-6">
+                    Have questions about our security architecture? We're happy to provide more details.
+                </p>
+                <div class="flex justify-center gap-4">
+                    <a href="index.html" class="bg-primary text-on-primary px-6 py-3 rounded-lg font-bold text-sm hover:opacity-90 transition-opacity">
+                        Back to Home
+                    </a>
+                    <a href="register.html" class="border border-outline-variant px-6 py-3 rounded-lg font-bold text-sm text-primary hover:bg-surface-container transition-colors">
+                        Get Started
+                    </a>
+                </div>
+            </footer>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 w-full py-12 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex flex-col gap-4">
+                <div class="font-headline font-black text-blue-900 text-xl">SehhaTech</div>
+                <p class="text-xs tracking-normal text-slate-500">© 2026 SehhaTech Clinical Systems. Helping clinics care for patients.</p>
+            </div>
+            <div class="flex items-center gap-8">
+                <a class="text-xs text-slate-500 hover:text-blue-900 underline" href="privacy.html">Privacy Policy</a>
+                <a class="text-xs text-slate-500 hover:text-blue-900 underline" href="terms.html">Terms of Service</a>
+                <a class="text-xs text-slate-500 hover:text-blue-900 font-bold text-blue-900 underline" href="security.html">Security</a>
+                <a class="text-xs text-slate-500 hover:text-blue-900 underline" href="status.html">Status</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
