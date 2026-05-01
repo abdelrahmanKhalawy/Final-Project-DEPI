@@ -1,0 +1,322 @@
+<!doctype html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SehhaTech | Manage Your Clinic with Ease</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-tint": "#455f88", "outline-variant": "#c4c6cf", "on-secondary": "#ffffff",
+              "on-tertiary-fixed": "#00201a", "on-surface-variant": "#43474e", "on-surface": "#181c1e",
+              "tertiary-container": "#003e34", "primary-fixed": "#d6e3ff", "tertiary-fixed-dim": "#93d3c3",
+              surface: "#f7fafc", "secondary-container": "#90efef", "on-error-container": "#93000a",
+              "secondary-fixed": "#93f2f2", "on-secondary-container": "#006e6e", "surface-bright": "#f7fafc",
+              "on-primary-container": "#86a0cd", "on-primary-fixed-variant": "#2d476f",
+              "surface-variant": "#e0e3e5", "surface-container-high": "#e5e9eb",
+              "primary-fixed-dim": "#adc7f7", "secondary-fixed-dim": "#76d6d5", primary: "#002045",
+              "on-secondary-fixed-variant": "#004f4f", "on-error": "#ffffff", "on-background": "#181c1e",
+              "inverse-surface": "#2d3133", "on-tertiary-container": "#6cab9c",
+              "surface-container-highest": "#e0e3e5", "on-tertiary": "#ffffff", tertiary: "#002620",
+              "inverse-on-surface": "#eef1f3", "on-tertiary-fixed-variant": "#045044",
+              "surface-dim": "#d7dadc", secondary: "#006a6a", "primary-container": "#1a365d",
+              "tertiary-fixed": "#afefdf", outline: "#74777f", error: "#ba1a1a", background: "#f7fafc",
+              "on-primary-fixed": "#001b3c", "on-secondary-fixed": "#002020",
+              "surface-container-lowest": "#ffffff", "surface-container": "#ebeef0",
+              "on-primary": "#ffffff", "error-container": "#ffdad6", "surface-container-low": "#f1f4f6",
+              "inverse-primary": "#adc7f7",
+            },
+            borderRadius: { DEFAULT: "0.5rem", lg: "0.5rem", xl: "1.5rem", full: "9999px" },
+            fontFamily: { headline: ["Manrope", "sans-serif"], display: ["Manrope", "sans-serif"], body: ["Inter", "sans-serif"], label: ["Inter", "sans-serif"] },
+          },
+        },
+      };
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        }
+
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #002045 0%, #1a365d 100%);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            color: #181c1e;
+            background-color: #f7fafc;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: "Manrope", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-surface selection:bg-secondary-container selection:text-on-secondary-container">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-lg shadow-xl shadow-blue-900/5">
+        <div class="flex justify-between items-center h-20 px-8 max-w-7xl mx-auto">
+            <div class="text-2xl font-bold text-blue-950 tracking-tighter">SehhaTech</div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a class="font-headline text-sm font-medium tracking-wide uppercase text-blue-900/70 hover:text-teal-600 transition-all duration-300" href="#features">Features</a>
+                <a class="font-headline text-sm font-medium tracking-wide uppercase text-blue-900/70 hover:text-teal-600 transition-all duration-300" href="#about">About</a>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="login.html" class="font-headline text-sm font-medium tracking-wide uppercase text-blue-900/70 hover:text-teal-600 transition-all duration-300">Login</a>
+                <a href="register.html" class="bg-gradient-primary text-on-primary px-6 py-2.5 rounded-lg font-headline text-sm font-medium tracking-wide uppercase shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-20">
+
+        <!-- Hero -->
+        <section class="relative overflow-hidden bg-surface py-24 lg:py-32">
+            <div class="max-w-7xl mx-auto px-8 grid lg:grid-cols-2 gap-16 items-center">
+                <div class="z-10">
+                    <span class="inline-block px-4 py-1.5 mb-6 text-[11px] font-bold tracking-[0.2em] uppercase bg-secondary-fixed text-on-secondary-container rounded-full">Simple Clinic Management</span>
+                    <h1 class="text-5xl lg:text-7xl font-extrabold text-primary tracking-tight leading-[1.1] mb-8">The Simple Way to Run a Modern Clinic</h1>
+                    <p class="text-xl text-on-surface-variant leading-relaxed mb-10 max-w-xl">SehhaTech helps healthcare providers streamline their daily operations, so you can spend less time on screens and more time with your patients.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="register.html" class="bg-gradient-primary text-on-primary px-8 py-4 rounded-lg font-bold text-base transition-all shadow-xl shadow-primary/20 hover:opacity-90">Get Started Now</a>
+                    </div>
+                </div>
+                <div class="relative lg:block">
+                    <div class="absolute -top-24 -right-24 w-96 h-96 bg-secondary-container/30 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-primary-fixed/30 rounded-full blur-3xl"></div>
+                    <div class="relative rounded-xl overflow-hidden shadow-2xl transform lg:rotate-2 hover:rotate-0 transition-transform duration-700">
+                        <img alt="Clinical Excellence with SehhaTech" class="w-full h-[500px] object-cover"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJwDwnd7rP19YSd4OWxQyi2NMLMrPoWCPzZgDnvhk1172XxYIpYVnqSiWAtga5Ud7EA46sx5elf0VfZbsO2l8_ifmhkLi94xAcTHf8h6w16Br2nn6AB8KUfZwGDllUapJSambadF0WQSRZsV0Si6fEt9Bek3V-Dy5A2CZAhiWdjIqSHzIlhUk67_kP7CSXDN0P5wgaM8EvYGjdLt_lMebYF7tD5jzOIKpwKqowGTmemqfIkSx4EdNqRA2g_Y1ViPGMAgNp-a8ytTY" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="py-24 bg-surface scroll-mt-20" id="features">
+            <div class="max-w-7xl mx-auto px-8">
+                <div class="mb-20">
+                    <h2 class="text-4xl font-extrabold text-primary tracking-tight mb-4">Essential Tools for Better Care</h2>
+                    <div class="h-1.5 w-24 bg-secondary rounded-full"></div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-surface-container-lowest p-10 rounded-xl shadow-sm hover:shadow-xl transition-all duration-500 group">
+                        <div class="w-14 h-14 bg-secondary-fixed rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-on-secondary-container text-3xl">calendar_month</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-4">Easy Scheduling</h3>
+                        <p class="text-on-surface-variant leading-relaxed">Book appointments effortlessly with a smart calendar that helps you manage patient flow and reduce no-shows.</p>
+                    </div>
+                    <div class="bg-surface-container-lowest p-10 rounded-xl shadow-sm hover:shadow-xl transition-all duration-500 group border-t-4 border-secondary/20">
+                        <div class="w-14 h-14 bg-tertiary-fixed rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-on-tertiary-fixed-variant text-3xl">clinical_notes</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-4">Secure Patient Records</h3>
+                        <p class="text-on-surface-variant leading-relaxed">Access medical histories and clinical notes instantly on a protected cloud system designed for physician privacy.</p>
+                    </div>
+                    <div class="bg-surface-container-lowest p-10 rounded-xl shadow-sm hover:shadow-xl transition-all duration-500 group">
+                        <div class="w-14 h-14 bg-primary-fixed rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-on-primary-fixed-variant text-3xl">payments</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-4">Clear Financial Reports</h3>
+                        <p class="text-on-surface-variant leading-relaxed">Track your clinic's revenue, billing, and insurance claims with simple, automated reports that save you time.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Platform Showcase -->
+        <section class="py-24 bg-surface-container-low overflow-hidden">
+            <div class="max-w-7xl mx-auto px-8">
+                <div class="grid lg:grid-cols-5 gap-16 items-center">
+                    <div class="lg:col-span-2">
+                        <h2 class="text-4xl font-extrabold text-primary leading-tight mb-8">One Platform. Every Role Covered.</h2>
+                        <div class="space-y-10">
+                            <div class="flex gap-6">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-white font-bold">1</div>
+                                <div>
+                                    <h4 class="text-lg font-bold text-primary mb-1">For Doctors</h4>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Focus on the patient, not the screen. Digital charting made simple and fast.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-6">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-white font-bold">2</div>
+                                <div>
+                                    <h4 class="text-lg font-bold text-primary mb-1">For Staff</h4>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Manage patient check-ins and phone calls with an organized, intuitive interface.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-6">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-white font-bold">3</div>
+                                <div>
+                                    <h4 class="text-lg font-bold text-primary mb-1">For Owners</h4>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Get a bird's-eye view of your business health with easy-to-read dashboards.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-3 relative">
+                        <div class="bg-surface-container-lowest rounded-xl shadow-2xl p-6 border border-outline-variant/10">
+                            <div class="flex items-center justify-between mb-8 pb-6 border-b border-surface-container">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                                    <div class="ml-4 h-6 w-48 bg-surface-container rounded-full"></div>
+                                </div>
+                                <div class="w-8 h-8 rounded-full bg-surface-container"></div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-4 mb-8">
+                                <div class="col-span-2 h-48 bg-secondary-container/20 rounded-lg p-6">
+                                    <div class="w-24 h-4 bg-secondary-container mb-4 rounded-full"></div>
+                                    <div class="w-full h-32 bg-secondary-container/40 rounded-lg"></div>
+                                </div>
+                                <div class="h-48 bg-primary-container/10 rounded-lg p-6">
+                                    <div class="w-16 h-4 bg-primary-container/30 mb-4 rounded-full"></div>
+                                    <div class="space-y-3">
+                                        <div class="h-3 bg-primary-container/20 rounded-full"></div>
+                                        <div class="h-3 bg-primary-container/20 rounded-full"></div>
+                                        <div class="h-3 bg-primary-container/20 rounded-full w-2/3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="h-64 bg-surface rounded-lg flex items-center justify-center relative overflow-hidden">
+                                <img alt="SehhaTech Dashboard Preview" class="absolute inset-0 w-full h-full object-cover opacity-20"
+                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBtFuVTePyXBdJ6LBv1kSUp6jnvAItbNto6l5eaWrsE_OutxnjDIr0UdxcCGeZc40XBRvE9_grK0HQtiVSLj9XWjL_u6kNaaZFlKWrPaUSeCQqcA6BhmsJpRzrx07tNyb-ibnX8GXW-NXkbgtZ_7yDuJZvDJcSOkRB0kMUbY4SvnSOQbgwWI8KI9VazNaqTZSpiZInL5PL2fUb1aEM4FKPvKv-y_cTf4Fe9GYXc8Ys0U4aHb2Wwhllqrfo9qhISIHUrkFz3MzLmCo" />
+                                <div class="z-10 text-center px-12">
+                                    <span class="material-symbols-outlined text-4xl text-secondary mb-4">lock</span>
+                                    <p class="text-sm font-bold text-primary uppercase tracking-widest">Protected by SehhaTech Security</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="py-24 bg-surface scroll-mt-20" id="about">
+            <div class="max-w-7xl mx-auto px-8">
+                <div class="grid lg:grid-cols-2 gap-16 items-center mb-32">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-secondary/5 rounded-[2rem] -rotate-3 scale-105"></div>
+                        <img alt="Modern clinic interior" class="relative rounded-[2rem] shadow-2xl object-cover w-full aspect-[4/3]"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuDa7787EZMkCo3A_KAJ-OscVw1L6A2PHlNWO6RvVbK38MqNWGlGUnu6Mq8NeZmwdSFnfT0DsE69p5OJlSI35U2szoCP14qwNhIZS_r2HWJiQqn4MN1dIDRhVyuQxWFsSNzCU0FR7XuM5C_J77BT4yN87l4G5BoguTGhhB0j50h_BLHJILXqKQxZyHMWSQSLHSThrJF2jW7F7u5SYSzqw5Hb7HSjBjj1MT7P5rWYkfWU8xEPy5584pMWXWE1EKgo5X4wv7s4CPR51cY" />
+                    </div>
+                    <div>
+                        <span class="inline-block px-4 py-1.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant text-[11px] font-bold tracking-widest uppercase mb-6">Our Vision</span>
+                        <h2 class="text-4xl lg:text-5xl font-extrabold text-primary leading-tight mb-8 tracking-tighter">Helping Doctors Focus on Patients, Not Paperwork</h2>
+                        <p class="text-xl text-on-surface-variant leading-relaxed mb-8">SehhaTech was built with a simple goal: to make the digital side of healthcare as intuitive as possible. We believe that technology should support the healing process, not get in its way.</p>
+                    </div>
+                </div>
+
+                <!-- Core Principles -->
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-extrabold text-primary mb-4">Why Choose SehhaTech?</h2>
+                    <p class="text-on-surface-variant max-w-2xl mx-auto">We build our tools based on four key principles that keep your clinic running smoothly.</p>
+                </div>
+                <div class="grid md:grid-cols-4 gap-6 mb-32">
+                    <div class="bg-surface-container-low p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow group">
+                        <div class="w-12 h-12 bg-secondary-fixed rounded-lg flex items-center justify-center mb-6 text-on-secondary-fixed group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined">handshake</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-3">Integrity</h3>
+                        <p class="text-on-surface-variant text-sm leading-relaxed">We are honest and transparent about how we protect your data and support your decisions.</p>
+                    </div>
+                    <div class="bg-surface-container-low p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow group md:mt-8">
+                        <div class="w-12 h-12 bg-tertiary-fixed rounded-lg flex items-center justify-center mb-6 text-on-tertiary-fixed group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined">psychology</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-3">Innovation</h3>
+                        <p class="text-on-surface-variant text-sm leading-relaxed">We use smart technology to automate boring tasks and prevent human errors.</p>
+                    </div>
+                    <div class="bg-surface-container-low p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow group">
+                        <div class="w-12 h-12 bg-primary-fixed rounded-lg flex items-center justify-center mb-6 text-on-primary-fixed group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined">person_pin_circle</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-3">Ease of Use</h3>
+                        <p class="text-on-surface-variant text-sm leading-relaxed">Every screen is designed to be clear and friendly for both staff and patients.</p>
+                    </div>
+                    <div class="bg-surface-container-low p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow group md:mt-8">
+                        <div class="w-12 h-12 bg-secondary-container rounded-lg flex items-center justify-center mb-6 text-on-secondary-container group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined">cloud_done</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-3">Reliability</h3>
+                        <p class="text-on-surface-variant text-sm leading-relaxed">You can count on SehhaTech to be online and ready whenever your clinic is open.</p>
+                    </div>
+                </div>
+
+                <!-- Story -->
+                <div class="grid lg:grid-cols-12 gap-16 items-center">
+                    <div class="lg:col-span-7">
+                        <h2 class="text-4xl font-extrabold text-primary mb-8 leading-tight">The Story Behind SehhaTech</h2>
+                        <div class="space-y-6 text-on-surface-variant text-lg leading-relaxed">
+                            <p>SehhaTech started when we noticed doctors were spending more time clicking buttons than listening to patients. We saw the frustration caused by complicated systems and decided to build a better way.</p>
+                            <p class="border-l-4 border-secondary pl-6 font-semibold italic text-primary">"The clinic shouldn't be a place of administrative stress. It should be a place where doctors can focus entirely on helping people heal."</p>
+                            <p>Today, SehhaTech is proud to support hundreds of clinics around the world, providing a digital workspace that feels as natural and reliable as your favorite medical tools.</p>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-5 relative">
+                        <img alt="SehhaTech team" class="rounded-xl shadow-lg w-full aspect-square object-cover"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL4tnGj2NWPc9x8yQgEN3VyUFEOH4sQWq0WehbojizIBTU3OmRdQZBQdflOvFHMbB1FDGiyogblfvau-iNLTafrc_ciZlodCOl65N4a5Kn5j0fKTaHP7FbYP2rYCmMn_WPO78gGntoBmf0IDghtItVrm5cBZlKfUUUwfHhmg8SLpkxQw4O8bb5seqapKMD8gA40FrL-7_iWTNiUpskRsn-_mcEGTf-CixIO5jyndYzOBrz0wXiFRQhuFCILeDgEFsaMcWX3RCzeto" />
+                        <div class="absolute -bottom-6 -left-6 bg-secondary-container p-6 rounded-lg shadow-xl max-w-xs">
+                            <p class="text-on-secondary-container font-bold font-headline text-2xl mb-1">50+</p>
+                            <p class="text-on-secondary-container text-xs font-semibold uppercase tracking-widest">Active Clinics Trust SehhaTech</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="py-24">
+            <div class="max-w-5xl mx-auto px-8">
+                <div class="bg-gradient-primary rounded-xl p-12 lg:p-20 text-center relative overflow-hidden shadow-2xl">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-secondary opacity-10 rounded-full -mr-20 -mt-20"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-on-primary-container opacity-10 rounded-full -ml-10 -mb-10"></div>
+                    <h2 class="text-4xl lg:text-5xl font-extrabold text-on-primary mb-6 relative z-10">Ready to Modernize Your Clinic?</h2>
+                    <p class="text-on-primary/80 text-xl mb-12 max-w-2xl mx-auto relative z-10">Join 50+ clinical systems that have transformed their patient experience with SehhaTech.</p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
+                        <a href="register.html" class="bg-secondary-fixed text-on-secondary-container px-10 py-4 rounded-lg font-bold text-lg hover:bg-on-secondary-container hover:text-white transition-all shadow-xl">
+                            Get Started Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 w-full py-12 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex flex-col gap-4">
+                <div class="font-headline font-black text-blue-900 text-xl">SehhaTech</div>
+                <p class="text-xs tracking-normal text-slate-500">© 2024 SehhaTech Clinical Systems. Helping clinics care for patients.</p>
+            </div>
+            <div class="flex items-center gap-8">
+                <a class="text-xs text-slate-500 hover:text-blue-900 underline" href="#">Privacy Policy</a>
+                <a class="text-xs text-slate-500 hover:text-blue-900 underline" href="#">Terms of Service</a>
+                <a class="text-xs text-slate-500 hover:text-blue-900 underline" href="#">Security</a>
+                <a class="text-xs text-slate-500 hover:text-blue-900 underline" href="#">Status</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
