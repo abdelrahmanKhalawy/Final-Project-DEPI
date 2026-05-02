@@ -1,4 +1,4 @@
-name: .NET CI
+name: .NET
 
 on:
   push:
@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Restore
-      run: dotnet restore Final-Project-DEPI.sln
+    - name: Restore dependencies
+      run: dotnet restore src/SehhaTech.API/SehhaTech.API.csproj
 
     - name: Build
-      run: dotnet build Final-Project-DEPI.sln --no-restore
+      run: dotnet build src/SehhaTech.API/SehhaTech.API.csproj --no-restore
