@@ -64,6 +64,10 @@
                 background: #ba1a1a;
                 color: #fff;
             }
+
+        #strengthBar {
+            transition: width 0.3s, background 0.3s;
+        }
     </style>
 </head>
 <body class="bg-[#f7fafc] text-on-surface font-body selection:bg-secondary-container selection:text-on-secondary-container antialiased">
@@ -98,6 +102,8 @@
 
             <div class="bg-surface-container-lowest rounded-xl p-8 md:p-12 shadow-[0_10px_40px_-10px_rgba(24,28,30,0.06)] relative">
                 <form class="space-y-12">
+
+                    <!-- Clinic Information -->
                     <section>
                         <div class="flex items-center gap-3 mb-6">
                             <span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL' 1">medical_services</span>
@@ -129,6 +135,7 @@
                         </div>
                     </section>
 
+                    <!-- Administrator Account -->
                     <section>
                         <div class="flex items-center gap-3 mb-6 pt-4 border-t border-surface-container">
                             <span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL' 1">admin_panel_settings</span>
@@ -143,17 +150,63 @@
                                 <label class="block font-label text-xs uppercase tracking-widest font-bold text-on-surface-variant">Professional Email</label>
                                 <input id="email" class="w-full bg-surface-container-low border-none rounded-lg p-4 text-on-surface focus:ring-2 focus:ring-primary transition-all duration-200 placeholder:text-outline" placeholder="e.g. ahmed@yourclinic.com" type="email" />
                             </div>
-                            <div class="space-y-2 relative">
+
+                            <!-- Password -->
+                            <div class="space-y-2">
                                 <label class="block font-label text-xs uppercase tracking-widest font-bold text-on-surface-variant">Password</label>
-                                <input id="password" class="w-full bg-surface-container-low border-none rounded-lg p-4 text-on-surface focus:ring-2 focus:ring-primary transition-all duration-200 placeholder:text-outline" placeholder="••••••••" type="password" />
+                                <div class="relative">
+                                    <input id="password" oninput="checkStrength()" type="password"
+                                           class="w-full bg-surface-container-low border-none rounded-lg p-4 pr-12 text-on-surface focus:ring-2 focus:ring-primary transition-all duration-200 placeholder:text-outline"
+                                           placeholder="••••••••" />
+                                    <button type="button" onclick="toggleVis('password','eye1')"
+                                            class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors">
+                                        <span id="eye1" class="material-symbols-outlined text-xl">visibility</span>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="space-y-2 relative">
+
+                            <!-- Confirm Password -->
+                            <div class="space-y-2">
                                 <label class="block font-label text-xs uppercase tracking-widest font-bold text-on-surface-variant">Confirm Password</label>
-                                <input id="confirmPassword" class="w-full bg-surface-container-low border-none rounded-lg p-4 text-on-surface focus:ring-2 focus:ring-primary transition-all duration-200 placeholder:text-outline" placeholder="••••••••" type="password" />
+                                <div class="relative">
+                                    <input id="confirmPassword" type="password"
+                                           class="w-full bg-surface-container-low border-none rounded-lg p-4 pr-12 text-on-surface focus:ring-2 focus:ring-primary transition-all duration-200 placeholder:text-outline"
+                                           placeholder="••••••••" />
+                                    <button type="button" onclick="toggleVis('confirmPassword','eye2')"
+                                            class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors">
+                                        <span id="eye2" class="material-symbols-outlined text-xl">visibility</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Strength Indicator -->
+                            <div class="md:col-span-2 p-4 bg-surface-container-low rounded-lg space-y-3">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="font-label text-xs uppercase tracking-widest font-bold text-on-surface-variant">Security Strength</span>
+                                    <span id="strengthLabel" class="font-label text-xs uppercase tracking-widest font-bold text-outline">—</span>
+                                </div>
+                                <div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+                                    <div id="strengthBar" class="h-full w-0 rounded-full"></div>
+                                </div>
+                                <ul class="grid grid-cols-2 gap-2 mt-2">
+                                    <li id="req-length" class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-outline">
+                                        <span class="material-symbols-outlined text-[14px]">circle</span> 8+ Characters
+                                    </li>
+                                    <li id="req-symbol" class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-outline">
+                                        <span class="material-symbols-outlined text-[14px]">circle</span> One Symbol
+                                    </li>
+                                    <li id="req-number" class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-outline">
+                                        <span class="material-symbols-outlined text-[14px]">circle</span> One Number
+                                    </li>
+                                    <li id="req-upper" class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-outline">
+                                        <span class="material-symbols-outlined text-[14px]">circle</span> Upper Case
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </section>
 
+                    <!-- Submit -->
                     <div class="pt-6">
                         <button id="registerBtn" type="button" onclick="handleRegister()"
                                 class="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-bold py-5 rounded-lg shadow-lg hover:shadow-xl hover:translate-y-[-2px] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2">
@@ -187,12 +240,11 @@
 
     <footer class="w-full border-t border-outline-variant/20 bg-white">
         <div class="flex flex-col md:flex-row justify-between items-center w-full px-12 py-12 gap-8 max-w-7xl mx-auto">
-            <p class="font-body text-[11px] uppercase tracking-widest font-bold text-on-surface-variant">© 2024 SehhaTech Medical Systems</p>
+            <p class="font-body text-[11px] uppercase tracking-widest font-bold text-on-surface-variant">© 2026 SehhaTech Medical Systems</p>
             <div class="flex flex-wrap justify-center gap-8">
-                <a class="font-body text-[11px] uppercase tracking-[0.15em] font-bold text-on-surface-variant hover:text-primary transition-colors" href="#">Compliance</a>
-                <a class="font-body text-[11px] uppercase tracking-[0.15em] font-bold text-on-surface-variant hover:text-primary transition-colors" href="#">Security</a>
-                <a class="font-body text-[11px] uppercase tracking-[0.15em] font-bold text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy</a>
-                <a class="font-body text-[11px] uppercase tracking-[0.15em] font-bold text-on-surface-variant hover:text-primary transition-colors" href="#">Terms</a>
+                <a class="font-body text-[11px] uppercase tracking-[0.15em] font-bold text-on-surface-variant hover:text-primary transition-colors" href="security.html">Security</a>
+                <a class="font-body text-[11px] uppercase tracking-[0.15em] font-bold text-on-surface-variant hover:text-primary transition-colors" href="privacy.html">Privacy</a>
+                <a class="font-body text-[11px] uppercase tracking-[0.15em] font-bold text-on-surface-variant hover:text-primary transition-colors" href="terms.html">Terms</a>
             </div>
         </div>
     </footer>
@@ -213,12 +265,55 @@
             const text = document.getElementById("btnText");
             const icon = document.getElementById("btnIcon");
             btn.disabled = loading;
-            if (loading) {
-                text.textContent = "Please wait...";
-                icon.textContent = "hourglass_empty";
+            if (loading) { text.textContent = "Please wait..."; icon.textContent = "hourglass_empty"; }
+            else          { text.textContent = "Continue to Plan Selection"; icon.textContent = "arrow_forward"; }
+        }
+
+        function toggleVis(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon  = document.getElementById(iconId);
+            if (input.type === "password") { input.type = "text";     icon.textContent = "visibility_off"; }
+            else                           { input.type = "password"; icon.textContent = "visibility"; }
+        }
+
+        function checkStrength() {
+            const val = document.getElementById("password").value;
+            const checks = {
+                length: val.length >= 8,
+                number: /\d/.test(val),
+                upper:  /[A-Z]/.test(val),
+                symbol: /[^a-zA-Z0-9]/.test(val),
+            };
+            updateReq("req-length", checks.length);
+            updateReq("req-number", checks.number);
+            updateReq("req-upper",  checks.upper);
+            updateReq("req-symbol", checks.symbol);
+
+            const score = Object.values(checks).filter(Boolean).length;
+            const configs = [
+                { width: "0%",   color: "",          text: "—" },
+                { width: "25%",  color: "#ba1a1a",   text: "Weak" },
+                { width: "50%",  color: "#f59e0b",   text: "Fair" },
+                { width: "75%",  color: "#006a6a",   text: "Good" },
+                { width: "100%", color: "#1A365D",   text: "Strong" },
+            ];
+            const bar   = document.getElementById("strengthBar");
+            const label = document.getElementById("strengthLabel");
+            bar.style.width      = configs[score].width;
+            bar.style.background = configs[score].color;
+            label.textContent    = configs[score].text;
+            label.style.color    = configs[score].color;
+        }
+
+        function updateReq(id, passed) {
+            const el   = document.getElementById(id);
+            const icon = el.querySelector(".material-symbols-outlined");
+            if (passed) {
+                el.classList.remove("text-outline"); el.classList.add("text-secondary");
+                icon.textContent = "check_circle"; icon.style.fontVariationSettings = "'wght' 700";
             } else {
-                text.textContent = "Continue to Plan Selection";
-                icon.textContent = "arrow_forward";
+                el.classList.remove("text-secondary"); el.classList.add("text-outline");
+                icon.textContent = "circle"; icon.style.fontVariationSettings = "'wght' 400";
             }
         }
 
@@ -226,19 +321,13 @@
             const fields = ["clinicName", "clinicAddress", "clinicPhone", "fullName", "email", "password", "confirmPassword"];
             for (const id of fields) {
                 const el = document.getElementById(id);
-                if (!el.value.trim()) {
-                    showToast("Please fill in all required fields.", "error");
-                    el.focus();
-                    return false;
-                }
+                if (!el.value.trim()) { showToast("Please fill in all required fields.", "error"); el.focus(); return false; }
             }
             if (document.getElementById("password").value !== document.getElementById("confirmPassword").value) {
-                showToast("Passwords do not match.", "error");
-                return false;
+                showToast("Passwords do not match.", "error"); return false;
             }
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById("email").value)) {
-                showToast("Please enter a valid email address.", "error");
-                return false;
+                showToast("Please enter a valid email address.", "error"); return false;
             }
             return true;
         }
@@ -246,9 +335,8 @@
         async function handleRegister() {
             if (!validate()) return;
             setLoading(true);
-
             try {
-                const res  = await fetch(`${API_BASE}/api/auth/register`, {
+                const res = await fetch(`${API_BASE}/api/auth/register`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -261,20 +349,12 @@
                         password:       document.getElementById("password").value,
                     }),
                 });
-
                 const data = await res.json();
-
-                if (!res.ok) {
-                    showToast(data.message || "Registration failed. Please try again.", "error");
-                    return;
-                }
-
+                if (!res.ok) { showToast(data.message || "Registration failed. Please try again.", "error"); return; }
                 sessionStorage.setItem("tenantId", data.tenantId);
                 sessionStorage.setItem("token", data.token);
-
                 showToast("Account created successfully! Redirecting to payment...", "success");
                 setTimeout(() => { window.location.href = "payment.html"; }, 1500);
-
             } catch (err) {
                 showToast("Network error. Please check your connection.", "error");
             } finally {
