@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>System Status | SehhaTech</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "tertiary-fixed": "#afefdf", "outline": "#74777f", "error": "#ba1a1a",
+                "secondary": "#006a6a", "primary-container": "#1a365d", "on-primary-fixed": "#001b3c",
+                "background": "#f7fafc", "tertiary": "#002620", "inverse-on-surface": "#eef1f3",
+                "on-tertiary-fixed-variant": "#045044", "surface-dim": "#d7dadc",
+                "surface-container": "#ebeef0", "on-primary": "#ffffff", "error-container": "#ffdad6",
+                "surface-container-low": "#f1f4f6", "inverse-primary": "#adc7f7",
+                "on-secondary-fixed": "#002020", "surface-container-lowest": "#ffffff",
+                "tertiary-fixed-dim": "#93d3c3", "surface": "#f7fafc", "on-error-container": "#93000a",
+                "secondary-container": "#90efef", "surface-tint": "#455f88",
+                "outline-variant": "#c4c6cf", "on-secondary": "#ffffff", "on-tertiary-fixed": "#00201a",
+                "on-surface-variant": "#43474e", "tertiary-container": "#003e34",
+                "primary-fixed": "#d6e3ff", "on-surface": "#181c1e", "primary": "#002045",
+                "on-secondary-fixed-variant": "#004f4f", "on-error": "#ffffff",
+                "on-background": "#181c1e", "on-tertiary-container": "#6cab9c",
+                "inverse-surface": "#2d3133", "surface-container-highest": "#e0e3e5",
+                "on-tertiary": "#ffffff", "surface-bright": "#f7fafc",
+                "on-primary-container": "#86a0cd", "secondary-fixed": "#93f2f2",
+                "on-secondary-container": "#006e6e", "surface-variant": "#e0e3e5",
+                "on-primary-fixed-variant": "#2d476f", "secondary-fixed-dim": "#76d6d5",
+                "surface-container-high": "#e5e9eb", "primary-fixed-dim": "#adc7f7"
+              },
+              borderRadius: { "DEFAULT": "0.5rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+              fontFamily: { "headline": ["Manrope"], "display": ["Manrope"], "body": ["Inter"], "label": ["Inter"] }
+            },
+          },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col items-center">
+
+    <main class="w-full max-w-3xl px-6 py-16 md:py-24">
+
+        <!-- Back Navigation -->
+        <nav class="mb-12">
+            <a class="inline-flex items-center gap-2 text-sm font-semibold text-outline hover:text-primary transition-colors" href="index.html">
+                <span class="material-symbols-outlined text-lg">arrow_back</span>
+                Back to Home
+            </a>
+        </nav>
+
+        <!-- Header -->
+        <header class="mb-16">
+            <div class="flex items-center gap-2 mb-4">
+                <div class="w-2.5 h-2.5 rounded-full bg-[#10b981]"></div>
+                <span class="text-sm font-bold tracking-wide uppercase text-secondary">All Systems Operational</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-primary mb-4 tracking-tight">System Status</h1>
+            <p class="text-lg text-on-surface-variant leading-relaxed">
+                Current status of the SehhaTech platform services. All core systems are running normally.
+            </p>
+        </header>
+
+        <!-- Uptime Summary -->
+        <section class="mb-20 grid grid-cols-2 gap-8 border-y border-outline-variant/30 py-10">
+            <div>
+                <div class="text-3xl font-black text-primary mb-1">99.9%</div>
+                <div class="text-xs font-bold uppercase tracking-widest text-outline">Target Uptime</div>
+            </div>
+            <div>
+                <div class="text-3xl font-black text-primary mb-1">.NET 10</div>
+                <div class="text-xs font-bold uppercase tracking-widest text-outline">Backend Runtime</div>
+            </div>
+        </section>
+
+        <!-- Service Status -->
+        <section class="mb-20 space-y-6">
+            <h2 class="text-xs font-bold text-outline uppercase tracking-[0.2em] mb-8">Service Status</h2>
+
+            <div class="flex items-center justify-between py-4 border-b border-outline-variant/20">
+                <div>
+                    <span class="font-medium">SehhaTech API</span>
+                    <p class="text-xs text-on-surface-variant mt-0.5">ASP.NET Core Web API (.NET 10) — Auth, Subscription, Upload</p>
+                </div>
+                <span class="text-sm font-bold text-secondary">Operational</span>
+            </div>
+
+            <div class="flex items-center justify-between py-4 border-b border-outline-variant/20">
+                <div>
+                    <span class="font-medium">SQL Server Database</span>
+                    <p class="text-xs text-on-surface-variant mt-0.5">Primary data store — Tenants, Users, Subscriptions, Appointments</p>
+                </div>
+                <span class="text-sm font-bold text-secondary">Operational</span>
+            </div>
+
+            <div class="flex items-center justify-between py-4 border-b border-outline-variant/20">
+                <div>
+                    <span class="font-medium">Cloudinary Image Storage</span>
+                    <p class="text-xs text-on-surface-variant mt-0.5">Image upload & delivery for doctors, patients, and clinics</p>
+                </div>
+                <span class="text-sm font-bold text-secondary">Operational</span>
+            </div>
+
+            <div class="flex items-center justify-between py-4 border-b border-outline-variant/20">
+                <div>
+                    <span class="font-medium">Paymob Payment Gateway</span>
+                    <p class="text-xs text-on-surface-variant mt-0.5">Subscription payments — 500 EGP/year per clinic</p>
+                </div>
+                <span class="text-sm font-bold text-secondary">Operational</span>
+            </div>
+
+            <div class="flex items-center justify-between py-4 border-b border-outline-variant/20">
+                <div>
+                    <span class="font-medium">JWT Authentication</span>
+                    <p class="text-xs text-on-surface-variant mt-0.5">Token-based auth with role isolation (SuperAdmin, ClinicAdmin, Doctor, Receptionist)</p>
+                </div>
+                <span class="text-sm font-bold text-secondary">Operational</span>
+            </div>
+
+            <div class="flex items-center justify-between py-4 border-b border-outline-variant/20">
+                <div>
+                    <span class="font-medium">Frontend Pages</span>
+                    <p class="text-xs text-on-surface-variant mt-0.5">Landing, Register, Payment, Login, Reset Password</p>
+                </div>
+                <span class="text-sm font-bold text-secondary">Operational</span>
+            </div>
+        </section>
+
+        <!-- Incident History -->
+        <section>
+            <h2 class="text-xs font-bold text-outline uppercase tracking-[0.2em] mb-12">Incident History</h2>
+            <div class="space-y-12">
+                <article>
+                    <time class="block text-xs font-bold text-outline mb-3">2024</time>
+                    <p class="text-on-surface-variant italic">No incidents reported. Platform launched successfully.</p>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 w-full py-12 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex flex-col gap-4">
+                <div class="font-headline font-black text-blue-900 text-xl">SehhaTech</div>
+                <p class="text-xs tracking-normal text-slate-500">© 2024 SehhaTech Clinical Systems. Helping clinics care for patients.</p>
+            </div>
+            <div class="flex items-center gap-8">
+                <a class="text-xs text-slate-500 hover:text-blue-900 underline" href="privacy.html">Privacy Policy</a>
+                <a class="text-xs text-slate-500 hover:text-blue-900 underline" href="terms.html">Terms of Service</a>
+                <a class="text-xs text-slate-500 hover:text-blue-900 underline" href="security.html">Security</a>
+                <a class="text-xs text-slate-500 hover:text-blue-900 font-bold text-blue-900 underline" href="status.html">Status</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
