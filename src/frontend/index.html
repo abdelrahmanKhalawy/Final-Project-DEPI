@@ -95,6 +95,19 @@
                     <p class="text-xl text-on-surface-variant leading-relaxed mb-10 max-w-xl">SehhaTech helps healthcare providers streamline their daily operations, so you can spend less time on screens and more time with your patients.</p>
                     <div class="flex flex-wrap gap-4">
                         <a href="register.html" class="bg-gradient-primary text-on-primary px-8 py-4 rounded-lg font-bold text-base transition-all shadow-xl shadow-primary/20 hover:opacity-90">Get Started Now</a>
+                        <button onclick="toggleChat()"
+                                class="group relative flex items-center gap-3 px-8 py-4 rounded-lg font-bold text-base overflow-hidden transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                                style="background: linear-gradient(135deg, #006a6a 0%, #008f8f 100%);">
+                            <!-- Shine effect -->
+                            <span class="absolute inset-0 w-full h-full bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+                            <!-- Pulse dot -->
+                            <span class="relative flex h-3 w-3">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-300 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-400"></span>
+                            </span>
+                            <span class="material-symbols-outlined text-white text-xl">smart_toy</span>
+                            <span class="text-white">Ask Our AI Assistant</span>
+                        </button>
                     </div>
                 </div>
                 <div class="relative lg:block">
@@ -318,5 +331,337 @@
             </div>
         </div>
     </footer>
+    <!-- ═══════════════════════════════════════════════════════
+         SehhaTech Chatbot Widget
+         أضف الكود ده قبل </body> في index.html مباشرة
+    ════════════════════════════════════════════════════════ -->
+    <!-- Chat Button -->
+    <button id="chat-toggle"
+            onclick="toggleChat()"
+            class="fixed bottom-6 right-6 z-50 w-16 h-16 bg-gradient-primary rounded-full shadow-2xl shadow-primary/40 flex items-center justify-center hover:scale-110 transition-all duration-300 group">
+        <span id="chat-icon" class="material-symbols-outlined text-white text-3xl">chat</span>
+        <span id="close-icon" class="material-symbols-outlined text-white text-3xl hidden">close</span>
+        <!-- Pulse ring -->
+        <span class="absolute inset-0 rounded-full bg-primary animate-ping opacity-20"></span>
+    </button>
+
+    <!-- Chat Window -->
+    <div id="chat-window"
+         class="fixed bottom-24 right-6 z-50 w-96 max-h-[600px] flex flex-col rounded-2xl shadow-2xl shadow-primary/20 overflow-hidden transition-all duration-300 scale-0 opacity-0 origin-bottom-right"
+         style="background: white;">
+
+        <!-- Header -->
+        <div class="bg-gradient-primary px-5 py-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-white text-xl">smart_toy</span>
+            </div>
+            <div class="flex-1">
+                <p class="text-white font-bold font-headline text-sm">SehhaTech Assistant</p>
+                <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                    <p class="text-white/70 text-xs">Online · Replies instantly</p>
+                </div>
+            </div>
+            <button onclick="toggleChat()" class="text-white/70 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+        </div>
+
+        <!-- Messages -->
+        <div id="chat-messages"
+             class="flex-1 overflow-y-auto p-4 space-y-3"
+             style="max-height: 380px; background: #f7fafc;">
+
+            <!-- Welcome message -->
+            <div class="flex gap-2 items-end">
+                <div class="w-7 h-7 rounded-full bg-secondary-fixed flex items-center justify-center flex-shrink-0 mb-1">
+                    <span class="material-symbols-outlined text-on-secondary-container text-sm">smart_toy</span>
+                </div>
+                <div class="bg-white rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm max-w-[80%]">
+                    <p class="text-on-surface text-sm leading-relaxed">
+                        👋 Hi! I'm SehhaTech's assistant.<br>
+                        Ask me anything about our clinic management system!
+                    </p>
+                    <p class="text-on-surface-variant text-[10px] mt-1">Just now</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Replies -->
+        <div id="quick-replies" class="px-4 py-2 flex flex-wrap gap-2 border-t border-surface-container">
+            <button onclick="sendQuick('What features does SehhaTech offer?')"
+                    class="text-xs px-3 py-1.5 rounded-full border border-secondary/40 text-secondary hover:bg-secondary-fixed transition-colors font-medium">
+                Features ✨
+            </button>
+            <button onclick="sendQuick('كم سعر الاشتراك؟')"
+                    class="text-xs px-3 py-1.5 rounded-full border border-secondary/40 text-secondary hover:bg-secondary-fixed transition-colors font-medium">
+                السعر 💰
+            </button>
+            <button onclick="sendQuick('How do I get started?')"
+                    class="text-xs px-3 py-1.5 rounded-full border border-secondary/40 text-secondary hover:bg-secondary-fixed transition-colors font-medium">
+                Get Started 🚀
+            </button>
+        </div>
+
+        <!-- Input -->
+        <div class="px-4 py-3 border-t border-surface-container flex gap-2 items-center bg-white">
+            <input id="chat-input"
+                   type="text"
+                   placeholder="Ask anything... / اسأل أي حاجة..."
+                   class="flex-1 text-sm bg-surface-container-low rounded-full px-4 py-2.5 outline-none focus:ring-2 focus:ring-secondary/30 text-on-surface placeholder-on-surface-variant/50 border-0"
+                   onkeydown="if(event.key==='Enter') sendMessage()" />
+            <button id="send-btn"
+                    onclick="sendMessage()"
+                    class="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0 hover:opacity-90 transition-opacity disabled:opacity-50">
+                <span class="material-symbols-outlined text-white text-lg">send</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- SehhaTech Chatbot Widget v2 - أضف قبل </body> -->
+    <!-- Chat Button -->
+    <button id="chat-toggle" onclick="toggleChat()"
+            class="fixed bottom-6 right-6 z-50 w-16 h-16 bg-gradient-primary rounded-full shadow-2xl shadow-primary/40 flex items-center justify-center hover:scale-110 transition-all duration-300">
+        <span id="chat-icon" class="material-symbols-outlined text-white text-3xl">chat</span>
+        <span id="close-icon" class="material-symbols-outlined text-white text-3xl hidden">close</span>
+        <span class="absolute inset-0 rounded-full bg-primary animate-ping opacity-20"></span>
+        <span id="unread-badge" class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-white text-[10px] font-bold flex items-center justify-center hidden">1</span>
+    </button>
+
+    <!-- Chat Window -->
+    <div id="chat-window"
+         class="fixed bottom-24 right-6 z-50 w-96 max-h-[600px] flex flex-col rounded-2xl shadow-2xl shadow-primary/20 overflow-hidden transition-all duration-300 scale-0 opacity-0 origin-bottom-right"
+         style="background:white;">
+
+        <div class="bg-gradient-primary px-5 py-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-white text-xl">smart_toy</span>
+            </div>
+            <div class="flex-1">
+                <p class="text-white font-bold font-headline text-sm">SehhaTech Assistant</p>
+                <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                    <p class="text-white/70 text-xs">Online · Replies instantly</p>
+                </div>
+            </div>
+            <button onclick="clearHistory()" title="Clear chat" class="text-white/50 hover:text-white transition-colors mr-1">
+                <span class="material-symbols-outlined text-base">delete_sweep</span>
+            </button>
+            <button onclick="toggleChat()" class="text-white/70 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+        </div>
+
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3" style="max-height:380px;background:#f7fafc;"></div>
+
+        <div id="quick-replies" class="px-4 py-2 flex flex-wrap gap-2 border-t border-surface-container"></div>
+
+        <div class="px-4 py-3 border-t border-surface-container flex gap-2 items-center bg-white">
+            <input id="chat-input" type="text"
+                   placeholder="Ask anything... / اسأل أي حاجة..."
+                   class="flex-1 text-sm bg-surface-container-low rounded-full px-4 py-2.5 outline-none focus:ring-2 focus:ring-secondary/30 text-on-surface border-0"
+                   onkeydown="if(event.key==='Enter') sendMessage()" />
+            <button id="send-btn" onclick="sendMessage()"
+                    class="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0 hover:opacity-90 transition-opacity">
+                <span class="material-symbols-outlined text-white text-lg">send</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+const API_URL = 'http://localhost:5099/api/chatbot/ask';
+const STORAGE_KEY = 'sehhatech_chat_history';
+const STORAGE_MSGS_KEY = 'sehhatech_chat_messages';
+
+let chatHistory = [];
+let isOpen = false;
+let isLoading = false;
+
+const quickReplySets = {
+  initial: [
+    { label: 'Features ✨', text: 'What features does SehhaTech offer?' },
+    { label: 'السعر 💰', text: 'كم سعر الاشتراك؟' },
+    { label: 'Get Started 🚀', text: 'How do I register my clinic?' },
+  ],
+  afterFeatures: [
+    { label: 'Pricing? 💰', text: 'How much does it cost?' },
+    { label: 'للأطباء 👨‍⚕️', text: 'إيه المميزات للأطباء؟' },
+    { label: 'Security? 🔒', text: 'How secure is my data?' },
+  ],
+  afterPricing: [
+    { label: 'Register now 🚀', text: 'How do I sign up?' },
+    { label: 'Trial? 🎁', text: 'Is there a free trial?' },
+    { label: 'المميزات ✨', text: 'إيه مميزات النظام؟' },
+  ],
+  afterRegister: [
+    { label: 'Features ✨', text: 'What can I do after registering?' },
+    { label: 'Support? 🤝', text: 'Do you offer customer support?' },
+    { label: 'الأدوار 👥', text: 'إيه الأدوار المتاحة في النظام؟' },
+  ],
+};
+
+function detectIntent(text) {
+  const t = text.toLowerCase();
+  if (t.includes('feature') || t.includes('مميز') || t.includes('يعمل')) return 'afterFeatures';
+  if (t.includes('price') || t.includes('cost') || t.includes('سعر') || t.includes('اشتراك')) return 'afterPricing';
+  if (t.includes('register') || t.includes('start') || t.includes('sign') || t.includes('اشترك') || t.includes('تسجيل')) return 'afterRegister';
+  return null;
+}
+
+function shouldShowCTA(text) {
+  const t = text.toLowerCase();
+  return t.includes('register') || t.includes('sign up') || t.includes('get start') ||
+         t.includes('اشترك') || t.includes('تسجيل') || t.includes('ابدأ');
+}
+
+function init() {
+  loadHistory();
+  const saved = localStorage.getItem(STORAGE_MSGS_KEY);
+  if (saved) {
+    document.getElementById('chat-messages').innerHTML = saved;
+    document.getElementById('chat-messages').scrollTop = 9999;
+  } else {
+      const welcome = '👋 Hi! / أهلاً!\nI\'m SehhaTech\'s AI assistant.\nأنا مساعد SehhaTech الذكي 😊\n\nAsk me anything! / اسألني أي حاجة!';
+      appendMessage('bot', welcome, false);
+  }
+  renderQuickReplies('initial');
+  setTimeout(() => { if (!isOpen) document.getElementById('unread-badge').classList.remove('hidden'); }, 3000);
+}
+
+function toggleChat() {
+  isOpen = !isOpen;
+  const win = document.getElementById('chat-window');
+  if (isOpen) {
+    win.classList.remove('scale-0','opacity-0');
+    win.classList.add('scale-100','opacity-100');
+    document.getElementById('chat-icon').classList.add('hidden');
+    document.getElementById('close-icon').classList.remove('hidden');
+    document.getElementById('unread-badge').classList.add('hidden');
+    document.getElementById('chat-input').focus();
+  } else {
+    win.classList.add('scale-0','opacity-0');
+    win.classList.remove('scale-100','opacity-100');
+    document.getElementById('chat-icon').classList.remove('hidden');
+    document.getElementById('close-icon').classList.add('hidden');
+  }
+}
+
+function renderQuickReplies(set) {
+  const replies = quickReplySets[set] || quickReplySets.initial;
+  document.getElementById('quick-replies').innerHTML = replies.map(r =>
+    `<button onclick="sendQuick('${r.text}')"
+      class="text-xs px-3 py-1.5 rounded-full border border-secondary/40 text-secondary hover:bg-secondary-fixed transition-colors font-medium">
+      ${r.label}</button>`).join('');
+}
+
+function sendQuick(text) {
+  document.getElementById('chat-input').value = text;
+  sendMessage();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text || isLoading) return;
+
+  input.value = '';
+  isLoading = true;
+  document.getElementById('send-btn').disabled = true;
+
+  appendMessage('user', text);
+  chatHistory.push({ role: 'user', text });
+  saveHistory();
+
+  const intent = detectIntent(text);
+  if (intent) renderQuickReplies(intent);
+
+  const typingId = showTyping();
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, history: chatHistory.slice(-10) })
+    });
+    const data = await res.json();
+    removeTyping(typingId);
+
+    const reply = data.success ? data.reply : 'Sorry, something went wrong. / عذراً، حدث خطأ.';
+    appendMessage('bot', reply, true, shouldShowCTA(text));
+
+    if (data.success) {
+      chatHistory.push({ role: 'model', text: reply });
+      saveHistory();
+      playSound();
+    }
+  } catch(e) {
+    removeTyping(typingId);
+    appendMessage('bot', 'Connection error. / خطأ في الاتصال.');
+  }
+
+  isLoading = false;
+  document.getElementById('send-btn').disabled = false;
+  input.focus();
+}
+
+function appendMessage(role, text, save = true, showCTA = false) {
+  const container = document.getElementById('chat-messages');
+  const isBot = role === 'bot';
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+  const cta = showCTA ? `<a href="register.html" class="inline-flex items-center gap-1.5 mt-3 px-4 py-2 bg-gradient-primary text-white text-xs font-bold rounded-lg hover:opacity-90 transition-opacity"><span class="material-symbols-outlined text-sm">rocket_launch</span>Register Now — 500 EGP/year</a>` : '';
+
+  const html = isBot
+    ? `<div class="flex gap-2 items-end"><div class="w-7 h-7 rounded-full bg-secondary-fixed flex items-center justify-center flex-shrink-0 mb-1"><span class="material-symbols-outlined text-on-secondary-container text-sm">smart_toy</span></div><div class="bg-white rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm max-w-[82%]"><p class="text-on-surface text-sm leading-relaxed">${formatted}</p>${cta}<p class="text-on-surface-variant text-[10px] mt-1">${time}</p></div></div>`
+    : `<div class="flex justify-end"><div class="bg-gradient-primary rounded-2xl rounded-br-sm px-4 py-3 max-w-[80%]"><p class="text-white text-sm leading-relaxed">${formatted}</p><p class="text-white/60 text-[10px] mt-1 text-right">${time}</p></div></div>`;
+
+  container.insertAdjacentHTML('beforeend', html);
+  container.scrollTop = container.scrollHeight;
+  if (save) localStorage.setItem(STORAGE_MSGS_KEY, container.innerHTML);
+}
+
+function showTyping() {
+  const id = 'typing-' + Date.now();
+  const c = document.getElementById('chat-messages');
+  c.insertAdjacentHTML('beforeend', `<div id="${id}" class="flex gap-2 items-end"><div class="w-7 h-7 rounded-full bg-secondary-fixed flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-secondary-container text-sm">smart_toy</span></div><div class="bg-white rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm"><div class="flex gap-1 items-center h-4"><span class="w-2 h-2 bg-secondary rounded-full animate-bounce" style="animation-delay:0ms"></span><span class="w-2 h-2 bg-secondary rounded-full animate-bounce" style="animation-delay:150ms"></span><span class="w-2 h-2 bg-secondary rounded-full animate-bounce" style="animation-delay:300ms"></span></div></div></div>`);
+  c.scrollTop = c.scrollHeight;
+  return id;
+}
+
+function removeTyping(id) { document.getElementById(id)?.remove(); }
+
+function playSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.setValueAtTime(800, ctx.currentTime);
+    osc.frequency.setValueAtTime(600, ctx.currentTime + 0.1);
+    gain.gain.setValueAtTime(0.1, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+    osc.start(); osc.stop(ctx.currentTime + 0.3);
+  } catch(e) {}
+}
+
+function saveHistory() { localStorage.setItem(STORAGE_KEY, JSON.stringify(chatHistory)); }
+
+function loadHistory() {
+  try { const s = localStorage.getItem(STORAGE_KEY); if (s) chatHistory = JSON.parse(s); }
+  catch(e) { chatHistory = []; }
+}
+
+function clearHistory() {
+  chatHistory = [];
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(STORAGE_MSGS_KEY);
+  document.getElementById('chat-messages').innerHTML = '';
+    const welcome = '👋 Hi! / أهلاً!\nI\'m SehhaTech\'s AI assistant.\nأنا مساعد SehhaTech الذكي 😊\n\nAsk me anything! / اسألني أي حاجة!';
+    appendMessage('bot', welcome, false);
+  renderQuickReplies('initial');
+}
+
+init();
+    </script>
 </body>
 </html>

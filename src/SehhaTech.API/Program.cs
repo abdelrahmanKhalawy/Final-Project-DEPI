@@ -15,6 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Services
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ChatBotService>();
 
 // JWT Auth
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
