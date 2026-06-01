@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SehhaTech.Infrastructure.Data;
 using SehhaTech.Core.Models;
-
+using System.ComponentModel.DataAnnotations;
 namespace SehhaTech.API.Controllers
 {
-    //[AllowAnonymous] ، // مؤقتًا للتجربة فقط بعدين هنرجعها
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
@@ -103,88 +102,18 @@ namespace SehhaTech.API.Controllers
         [HttpPost("patients")]
         public async Task<IActionResult> AddPatient(CreatePatientRequest request)
         {
-            if (request == null)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(new
                 {
                     success = false,
-                    message = "Request body is required"
-                });
-            }
-
-            if (string.IsNullOrWhiteSpace(request.FullName))
-            {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Patient full name is required"
-                });
-            }
-
-            if (request.FullName.Trim().Length < 3)
-            {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Patient full name must be at least 3 characters"
-                });
-            }
-
-            if (string.IsNullOrWhiteSpace(request.Phone))
-            {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Patient phone is required"
-                });
-            }
-
-            var phone = request.Phone.Trim();
-
-            if (!phone.All(char.IsDigit))
-            {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Patient phone must contain digits only"
-                });
-            }
-
-            if (phone.Length < 10 || phone.Length > 15)
-            {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Patient phone must be between 10 and 15 digits"
-                });
-            }
-
-            if (string.IsNullOrWhiteSpace(request.Email))
-            {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Patient email is required"
-                });
-            }
-
-            var email = request.Email.Trim().ToLower();
-
-            if (!email.Contains("@") || !email.Contains("."))
-            {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Invalid email format"
-                });
-            }
-
-            if (request.DateOfBirth == default)
-            {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Patient date of birth is required"
+                    message = "Validation failed",
+                    errors = ModelState
+                        .Where(x => x.Value?.Errors.Count > 0)
+                        .ToDictionary(
+                            x => x.Key,
+                            x => x.Value!.Errors.Select(e => e.ErrorMessage).ToArray()
+                        )
                 });
             }
 
@@ -206,29 +135,11 @@ namespace SehhaTech.API.Controllers
                 });
             }
 
-            if (string.IsNullOrWhiteSpace(request.Gender))
-            {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Patient gender is required"
-                });
-            }
+            var tenantId = (int)HttpContext.Items["TenantId"]!;
 
+            var phone = request.Phone.Trim();
+            var email = request.Email.Trim().ToLower();
             var gender = request.Gender.Trim();
-
-            var allowedGenders = new[] { "Male", "Female" };
-
-            if (!allowedGenders.Contains(gender, StringComparer.OrdinalIgnoreCase))
-            {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Gender must be Male or Female"
-                });
-            }
-
-            var tenantId = (int)HttpContext.Items["TenantId"]!; 
 
             var phoneExists = await _context.Patients
                 .AnyAsync(p => p.TenantId == tenantId && p.Phone == phone);
@@ -283,15 +194,59 @@ namespace SehhaTech.API.Controllers
                 }
             });
         }
-
         [HttpGet("appointments")]
-        public async Task<IActionResult> GetAppointments()
+        public async Task<IActionResult> GetAppointments(DateTime? from,DateTime? to,
+              int page = 1,
+              int pageSize = 10)
         {
-            var tenantId = (int)HttpContext.Items["TenantId"]!; 
+            if (page <= 0)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Page must be greater than 0"
+                });
+            }
 
-            var appointments = await _context.Appointments
-                .Where(a => a.TenantId == tenantId)
+            if (pageSize <= 0 || pageSize > 100)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "PageSize must be between 1 and 100"
+                });
+            }
+
+            if (from.HasValue && to.HasValue && from.Value.Date > to.Value.Date)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "From date cannot be after To date"
+                });
+            }
+
+            var tenantId = (int)HttpContext.Items["TenantId"]!;
+
+            var query = _context.Appointments
+                .Where(a => a.TenantId == tenantId);
+
+            if (from.HasValue)
+            {
+                query = query.Where(a => a.AppointmentDate >= from.Value.Date);
+            }
+
+            if (to.HasValue)
+            {
+                query = query.Where(a => a.AppointmentDate < to.Value.Date.AddDays(1));
+            }
+
+            var totalCount = await query.CountAsync();
+
+            var appointments = await query
                 .OrderBy(a => a.AppointmentDate)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(a => new
                 {
                     a.Id,
@@ -311,6 +266,10 @@ namespace SehhaTech.API.Controllers
             {
                 success = true,
                 message = "Appointments retrieved successfully",
+                page,
+                pageSize,
+                totalCount,
+                totalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
                 count = appointments.Count,
                 data = appointments
             });
@@ -661,10 +620,23 @@ namespace SehhaTech.API.Controllers
 
     public class CreatePatientRequest
     {
+        [Required(ErrorMessage = "Patient full name is required")]
+        [MinLength(3, ErrorMessage = "Patient full name must be at least 3 characters")]
         public string FullName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Patient phone is required")]
+        [RegularExpression(@"^\d{10,15}$", ErrorMessage = "Patient phone must contain digits only and be between 10 and 15 digits")]
         public string Phone { get; set; } = string.Empty;
-        public string? Email { get; set; }
+
+        [Required(ErrorMessage = "Patient email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email format")]
+        public string Email { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Patient date of birth is required")]
         public DateTime DateOfBirth { get; set; }
+
+        [Required(ErrorMessage = "Patient gender is required")]
+        [RegularExpression("^(Male|Female)$", ErrorMessage = "Gender must be Male or Female")]
         public string Gender { get; set; } = string.Empty;
     }
     public class CreateAppointmentRequest

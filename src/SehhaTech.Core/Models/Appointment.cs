@@ -4,6 +4,7 @@
     {
         Scheduled,
         Confirmed,
+        CheckedIn,
         Completed,
         Cancelled,
         NoShow
